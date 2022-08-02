@@ -37,14 +37,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-  public function tasks()
-    {
-        return $this->hasMany('App\Task', 'assignto');
+    public function Tasks() {
+        return $this->hasMany('App\Task');
     }
-    /*
-    public function  ownTask() {
-        return $this->hasMany('App\Task', 'owner_id');
-
-
-    }*/
 }

@@ -22,6 +22,18 @@ Route::get('task/soft/delete/{id}', 'TaskController@softDelete')
 ->name('soft.delete');
 Route::resource('users', 'UserController');
 
+Route::get('task/reOpenTask/{id}', 'TaskController@reOpenTask')
+->name('reOpenTask');
+Route::get('task/closeTask/{id}', 'TaskController@closeTask')
+->name('closeTask');
+
+Route::get('task/reSloveTask/{id}', 'TaskController@reSloveTask')
+->name('reSloveTask');
+Route::get('task/assignto/{id}', 'TaskController@assignto')
+->name('assignto');
+Route::get('task/assigned', 'TaskController@assigned')
+->name('assigned');
+
 /*
 Route::get('task/trash', 'TaskController@trashedTasks')
 ->name('task.trash');

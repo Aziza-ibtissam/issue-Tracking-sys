@@ -8,20 +8,20 @@
 @if (Auth :: user()->user_type =='admin')
   <h4>Admin Page</h4>
     <a class="btn btn-info" href="{{ url('/home')}}" role="button">Home </a>
-    <a class="btn btn-light" href="{{ route('users.index')}}" role="button">All Task </a>
+    <a class="btn btn-light" href="{{ route('tasks.index')}}" role="button">All Task </a>
     <a class="btn btn-light" href="{{ route('users.index')}}" role="button">All Users </a>
 
 
-    @else
+    @elseif (Auth :: user()->user_type =='user')
     <h4>All TASKS</h4>
     <a class="btn btn-light" href="{{ url('/home')}}" role="button">Home </a>
 
     <a class="btn btn-info" href="{{ route('tasks.create')}}" role="button">Add Task  </a>
     <a class="btn btn-info" href="" role="button">Assing task  </a>
-
-
-
-
+    @else
+    <a class="btn btn-light" href="{{ url('/home')}}" role="button">Home </a>
+    <a class="btn btn-info" href="{{ route('assigned')}}" role="button">Assigned  </a>
+    <a class="btn btn-info" href="{{ route('tasks.index')}}" role="button">All Task </a>
     @endif
 
   </div>
@@ -41,23 +41,25 @@
     <table class="table">
         <thead class="thead-dark">
           <tr>
-            <th scope="col">Owner_id</th>
-            <th scope="col">Title</th>
-            <th scope="col">Description</th>
+            <th scope="col" style="width: 50px">Name</th>
+            <th scope="col" style="width: 300px">Title</th>
             <th scope="col">Status</th>
-            <th scope="col">Seen</th>
-            <th scope="col" style="width: 460px">Actions</th>
+
+            <th scope="col" style="width: 500px">Actions</th>
           </tr>
         </thead>
         <tbody>
 
             @foreach ($tasks as $item)
             <tr>
-                <th scope="row">{{$item->User}}</th>
+
+
+                <th scope="row">{{$item->ownerUser->name}}
+
+                </th>
                 <td>{{ $item->title }}</td>
-                <td>{{ $item->description }}   </td>
+
                 <td>{{ $item->status }}</td>
-                <td>{{ $item->seen }}</td>
 
 
 
@@ -76,47 +78,36 @@
 
 
                         <div class="col-sm">
-                             @if ($item ->onwer_id == Auth::id()|| Auth :: user()->user_type =='admin')
+                             @if ($item ->owner_id == Auth::id()|| Auth :: user()->user_type =='admin')
                             &nbsp;&nbsp;
                             <a  class="btn btn-danger" href="{{ route('soft.delete',$item->id)}}"> Delete </a>
                              @endif
                         </div>
-                        @if ( Auth :: user()->user_type =='user')
-                           &nbsp;&nbsp;
-                          <div class="col-sm">
-                            <a  class="btn btn-light" href="{{ route('tasks.edit',$item->id)}}"> Reslove  </a>
-                          </div>
-                          <div class="col-sm">
-                            <a  class="btn btn-light" href="{{ route('tasks.edit',$item->id)}}"> Reopen </a>
-                          </div>
-                         @endif
 
-                        {{--
-                        <div >
-
-                           @if ($item ->status =='resolve' ||$item ->status =='close'  )
+                        {{--   @if ($item ->status =='open'  )
                            <div class="col-sm">
-                           <a class="btn btn-light" href="{{ route('tasks.create')}}" >Reopen   </a>
+                           <a class="btn btn-light" href="{{ route('reSloveTask',$item->id)}}" >Reslove   </a>
                            </div>
 
                            @elseif ($item ->status =='close')
                            <div class="col-sm">
-                           <a class="btn btn-light" href="{{ route('tasks.create')}}" >Reopen   </a>
-                        </div>
+                           <a class="btn btn-light" href="{{ route('reOpenTask' , $item->id)}}" >Reopen   </a>
+                          </div>
                            @elseif ($item ->status =='reslove')
                            <div class="col-sm">
 
-                            <a class="btn btn-light" href="{{ route('tasks.create')}}" >Close   </a>
+                            <a class="btn btn-light" href="{{ route('closeTask' , $item->id)}}" >Close   </a>
                         </div>
                             <div class="col-sm">
-                           <a class="btn btn-light" href="{{ route('tasks.create')}}" >Reopen  </a>
+                           <a class="btn btn-light" href="{{ route('reOpenTask' , $item->id)}}" >Reopen  </a>
                            </div>
 
                            @endif
-                           @endif
-                       </div>
-
                            --}}
+
+
+
+
                     </div>
 
 

@@ -1,4 +1,4 @@
-@extends('task.layout')
+@extends('user.layout')
 
 @section('content')
 
